@@ -1090,7 +1090,10 @@ buffer respectively."
 	    '((syslog-strace-font-lock-keywords))
 	  '(syslog-font-lock-keywords t t nil )))
   (buffer-disable-undo)
-  (toggle-read-only 1)
+  (if (functionp 'read-only-mode)
+      (read-only-mode 1)
+    (if (functionp 'toggle-read-only)
+	(toggle-read-only 1)))
   (syslog-load-notes)
   (setq-local syslog-note-thing
 	      (or (let ((bfn (or (and buffer-file-name
